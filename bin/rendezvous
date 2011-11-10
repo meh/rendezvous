@@ -1,0 +1,19 @@
+#! /usr/bin/env ruby
+require 'optparse'
+require 'rendezvous'
+
+options = {}
+
+OptionParser.new do |o|
+  options[:config] = "#{ENV['HOME']}/.rendezvous"
+
+  o.on '-c', '--config [PATH]', 'Use this file as rendezvous' do |path|
+    options[:config] = path
+  end
+end.parse!
+
+begin
+	Rendezvous.parse(options[:config]).start!
+rescue => e
+	puts e.message
+end
